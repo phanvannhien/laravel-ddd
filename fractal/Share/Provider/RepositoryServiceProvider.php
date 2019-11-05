@@ -9,13 +9,14 @@ use Doctrine\ORM\EntityManagerInterface;
 
 // Repository
 use Fractal\Article\Domain\Model\Article\ArticleRepository;
-use Fractal\Article\Infrastructure\Persistence\Doctrine\DoctrineArticleRepository;
+use Fractal\Article\Domain\Model\Article\Article;
+
 
 class RepositoryServiceProvider extends ServiceProvider{
     private function repositories()
     {
         return [
-            ArticleRepository::class => DoctrineArticleRepository::class,
+            ArticleRepository::class => Article::class,
             
         ];
     }
@@ -31,7 +32,7 @@ class RepositoryServiceProvider extends ServiceProvider{
 
         foreach ($this->repositories() as $repository => $entity) {
             $this->app->singleton($repository, function (Application $app) use ($entity) {
-                return  $app->make(EntityManagerInterface::class)->getRepository($entity);
+                return  $app->make( EntityManagerInterface::class )->getRepository($entity);
             });
         }
     }

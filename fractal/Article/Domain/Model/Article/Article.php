@@ -1,9 +1,11 @@
 <?php
+namespace Fractal\Article\Domain\Model\Article;
 
 use Doctrine\ORM\Mapping AS ORM;
 
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fractal\Article\Infrastructure\Persistence\Doctrine\DoctrineArticleRepository")
  * @ORM\Table(name="articles")
  */
 class Article

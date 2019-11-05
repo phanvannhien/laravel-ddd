@@ -11,13 +11,14 @@ class DoctrineArticleRepository extends EntityRepository implements ArticleRepos
 {
     public function getAllArticle()
     {
-        $this->findAll();
+        return $this->findAll();
     }
 
 
-    public function ofId(int $id ): Article
+
+    public function getArticle(int $id ): Article
     {
-        $article = $this->find($id);
+        $article = $this->findOneBy(['id' => $id]);
 
         if (null === $article) {
             throw new \InvalidArgumentException('Invalid user id');

@@ -7,6 +7,7 @@ Route::group([
     'prefix' => '',
     'namespace' => 'Fractal\Article\Infrastructure\Http\Controller'], function() {
 
-    Route::get('/articles', ['as' => 'articles', 'uses' => 'ArticleController@getAllArtical']);
+    Route::get('/articles', ['as' => 'articles', 'uses' => 'ArticleController@getAllArticle']);
+    Route::get('/articles/{id}', ['as' => 'get.articles', 'uses' => 'ArticleController@getArticle']);
    
 });

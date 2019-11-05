@@ -165,7 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Fractal\Share\Provider\RepositoryServiceProvider::class,
         /*
          * Application Service Providers...
          */
