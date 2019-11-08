@@ -10,6 +10,8 @@ use Doctrine\ORM\EntityManagerInterface;
 // Repository
 use Fractal\Article\Domain\Model\Article\ArticleRepository;
 use Fractal\Article\Domain\Model\Article\Article;
+use Fractal\User\Domain\Model\User\User;
+use Fractal\User\Domain\Model\User\UserRepository;
 
 
 class RepositoryServiceProvider extends ServiceProvider{
@@ -17,7 +19,7 @@ class RepositoryServiceProvider extends ServiceProvider{
     {
         return [
             ArticleRepository::class => Article::class,
-            
+            UserRepository::class => User::class
         ];
     }
 

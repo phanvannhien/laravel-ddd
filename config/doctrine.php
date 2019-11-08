@@ -27,7 +27,8 @@ return [
             'connection'    => env('DB_CONNECTION', 'mysql'),
             'namespaces'    => [],
             'paths'         => [
-                base_path('fractal/Article/Domain/Model/Article/Article')
+                base_path('fractal/Article/Domain/Model/Article'),
+                base_path('fractal/User/Domain/Model/User')
             ],
             'repository'    => Doctrine\ORM\EntityRepository::class,
             'proxies'       => [
