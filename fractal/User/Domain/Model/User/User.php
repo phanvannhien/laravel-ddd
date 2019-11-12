@@ -4,7 +4,7 @@ namespace Fractal\User\Domain\Model\User;
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Carbon\Carbon;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Fractal\User\Infrastructure\Persistence\Doctrine\DoctrineUserRepository")
@@ -35,6 +35,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
     private $email;
 
      /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      * @var datetime
      */
@@ -42,6 +43,7 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
 
      /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Gedmo\Timestampable(on="update")
      * @var datetime
      */
     private $updated_at;
@@ -125,31 +127,18 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
         return $this->password;
     }
 
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
-    public function updatedTimestamps()
-    {
-        $this->setUpdatedAt();    
-        if ($this->getCreatedAt() === null) {
-            $this->setCreatedAt();
-        }
-    }
-
-    public function setUpdatedAt()
-    {
-        $this->updated_at = Carbon::now();
-    }
-
-    public function setCreatedAt()
-    {
-        $this->created_at = Carbon::now();
-    }
-
     public function getCreatedAt()
     {
         return $this->created_at;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'email' => $this->getEmail()
+        ];
     }
 
     public function setId(int $id)

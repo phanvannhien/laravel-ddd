@@ -165,7 +165,14 @@ return [
         /*
          * Package Service Providers...
          */
+        LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider::class,
+        LaravelDoctrine\Extensions\BeberleiExtensionsServiceProvider::class,
+        
+        Fractal\Share\Provider\AppServiceProvider::class,
         Fractal\Share\Provider\RepositoryServiceProvider::class,
+        Fractal\Share\Provider\CommandBusServiceProvider::class,
+        
+    
         /*
          * Application Service Providers...
          */
@@ -226,6 +233,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Serializer' => Fractal\Share\Facade\SerializerFacade::class,
     ],
 
 ];

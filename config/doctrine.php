@@ -88,11 +88,11 @@ return [
     | laravel-doctrine/extensions in your composer.json
     |
     */
-    'extensions'                 => [
+    'extensions' => [
         //LaravelDoctrine\ORM\Extensions\TablePrefix\TablePrefixExtension::class,
-        //LaravelDoctrine\Extensions\Timestamps\TimestampableExtension::class,
-        //LaravelDoctrine\Extensions\SoftDeletes\SoftDeleteableExtension::class,
-        //LaravelDoctrine\Extensions\Sluggable\SluggableExtension::class,
+        LaravelDoctrine\Extensions\Timestamps\TimestampableExtension::class,
+        LaravelDoctrine\Extensions\SoftDeletes\SoftDeleteableExtension::class,
+        LaravelDoctrine\Extensions\Sluggable\SluggableExtension::class,
         //LaravelDoctrine\Extensions\Sortable\SortableExtension::class,
         //LaravelDoctrine\Extensions\Tree\TreeExtension::class,
         //LaravelDoctrine\Extensions\Loggable\LoggableExtension::class,
@@ -109,6 +109,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'custom_types'               => [
+    
     ],
     /*
     |--------------------------------------------------------------------------
