@@ -4,7 +4,8 @@ namespace Fractal\User\Domain\Model\User;
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Carbon\Carbon;
-
+use LaravelDoctrine\Extensions\Timestamps\Timestamps;
+use LaravelDoctrine\ORM\Auth\Authenticatable as Authenticatable;
 
 /**
  * @ORM\Entity(repositoryClass="Fractal\User\Infrastructure\Persistence\Doctrine\DoctrineUserRepository")
@@ -13,7 +14,7 @@ use Carbon\Carbon;
  */
 class User implements \Illuminate\Contracts\Auth\Authenticatable
 {
-    use \LaravelDoctrine\ORM\Auth\Authenticatable;
+    use Authenticatable, Timestamps;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -33,18 +34,6 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
      * @var string
      */
     private $email;
-
-     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var datetime
-     */
-    private $created_at;
-
-     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var datetime
-     */
-    private $updated_at;
 
     /**
      * @ORM\OneToMany(targetEntity="Fractal\Article\Domain\Model\Article\Article", mappedBy="user")
@@ -125,17 +114,17 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
         return $this->password;
     }
 
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
-    public function updatedTimestamps()
-    {
-        $this->setUpdatedAt();    
-        if ($this->getCreatedAt() === null) {
-            $this->setCreatedAt();
-        }
-    }
+    // /**
+    //  * @ORM\PrePersist
+    //  * @ORM\PreUpdate
+    //  */
+    // public function updatedTimestamps()
+    // {
+    //     $this->setUpdatedAt();    
+    //     if ($this->getCreatedAt() === null) {
+    //         $this->setCreatedAt();
+    //     }
+    // }
 
     public function setUpdatedAt()
     {
