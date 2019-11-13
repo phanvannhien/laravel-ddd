@@ -16,3 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+require base_path('fractal/Article/Infrastructure/Http/routes.php');
+require base_path('fractal/User/Infrastructure/Http/routes.php');

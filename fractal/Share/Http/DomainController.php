@@ -10,4 +10,8 @@ use Illuminate\Routing\Controller as BaseController;
 class DomainController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    protected function toArray(string $json) {
+        return json_decode($json);
+    }
 }

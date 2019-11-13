@@ -4,8 +4,8 @@ namespace Fractal\User\Domain\Model\User;
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Carbon\Carbon;
-use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 use LaravelDoctrine\ORM\Auth\Authenticatable as Authenticatable;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Fractal\User\Infrastructure\Persistence\Doctrine\DoctrineUserRepository")
@@ -14,7 +14,7 @@ use LaravelDoctrine\ORM\Auth\Authenticatable as Authenticatable;
  */
 class User implements \Illuminate\Contracts\Auth\Authenticatable
 {
-    use Authenticatable, Timestamps;
+    use Authenticatable;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -34,6 +34,20 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
      * @var string
      */
     private $email;
+
+     /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var datetime
+     */
+    private $created_at;
+
+     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Gedmo\Timestampable(on="update")
+     * @var datetime
+     */
+    private $updated_at;
 
     /**
      * @ORM\OneToMany(targetEntity="Fractal\Article\Domain\Model\Article\Article", mappedBy="user")
@@ -114,31 +128,18 @@ class User implements \Illuminate\Contracts\Auth\Authenticatable
         return $this->password;
     }
 
-    // /**
-    //  * @ORM\PrePersist
-    //  * @ORM\PreUpdate
-    //  */
-    // public function updatedTimestamps()
-    // {
-    //     $this->setUpdatedAt();    
-    //     if ($this->getCreatedAt() === null) {
-    //         $this->setCreatedAt();
-    //     }
-    // }
-
-    public function setUpdatedAt()
-    {
-        $this->updated_at = Carbon::now();
-    }
-
-    public function setCreatedAt()
-    {
-        $this->created_at = Carbon::now();
-    }
-
     public function getCreatedAt()
     {
         return $this->created_at;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'email' => $this->getEmail()
+        ];
     }
 
     public function setId(int $id)

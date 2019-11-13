@@ -7,28 +7,36 @@ use Fractal\Share\Http\DomainController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use Fractal\User\Domain\Model\User\UserRepository;
+use Fractal\Share\Application\CommandBus;
+use Fractal\User\Application\Command\User\RegisterUserCommand;
+use Fractal\User\Infrastructure\Http\Requests\CreateUserRequest;
+
+use Fractal\User\Application\Query\GetUserQuery;
+use Fractal\User\Application\Query\GetUserHandler;
+
+use Serializer;
 
 class UserController extends DomainController{
-    public function getArticles( UserRepository $repo ){
+
+    public function getArticles( UserRepository $repo )
+    {
         $user = Auth::user();
-        dd( $repo->getArticles($user) );
-    }
-    public function getUser(  UserRepository $repo , $id ){
-       
-        dd( $repo->getUser( (int)$id ) );
     }
 
-    public function createUser(UserRepository $repo, Request $request) {
-        $data = $request->all();
-        $user = $repo->store($data);
-        dd($user);
+    public function getUser( GetUserHandler $getUserHandle, $id )
+    {
+        $query = new GetUserQuery( (int)$id );
+        $userPayload = $getUserHandle->getUser( $query );
+        $userCollection = $userPayload->getUserCollection();
+
+        return response()->json( json_decode(Serializer::serialize($userCollection)) );
     }
 
-    public function login(UserRepository $repo, Request $request) {
-        $data = $request->all();
-        $user = $repo->login($data);
-        dd($user);
+    public function createUser(CommandBus $commandBus, CreateUserRequest $request) {
+        $command = new RegisterUserCommand( $request->get('email'), $request->get('password'), $request->get('name') );
+        $user = $commandBus->handle( $command );
+        return response()->json( $user );
     }
+
 
 }

@@ -15,5 +15,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-require base_path('fractal/Article/Infrastructure/Http/routes.php');
-require base_path('fractal/User/Infrastructure/Http/routes.php');
